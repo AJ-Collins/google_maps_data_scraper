@@ -21,9 +21,6 @@ leadgen.log
 *.csv
 *.json
 
-# Storage folder
-storage/
-
 # OS files
 .DS_Store
 Thumbs.db
