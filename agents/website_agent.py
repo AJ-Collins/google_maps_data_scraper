@@ -1,6 +1,3 @@
-# ─────────────────────────────────────────────
-#  agents/website_agent.py  –  Website Enrichment Agent
-# ─────────────────────────────────────────────
 """
 For each lead that has a website URL, fetches homepage + contact pages
 and hands the raw HTML to the EmailAgent for extraction.
@@ -58,8 +55,6 @@ class WebsiteEnrichmentAgent:
             random_delay(1, 2.5)   # polite crawl
         log.info("WebsiteEnrichmentAgent: fetched content for %d websites.", enriched)
         return leads
-
-    # ── Internal ────────────────────────────────────────────────────────
 
     def _crawl_website(self, base_url: str) -> str:
         """Fetch homepage + contact sub-pages; return combined text."""

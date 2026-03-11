@@ -1,8 +1,3 @@
-#!/usr/bin/env python3
-# ─────────────────────────────────────────────
-#  main.py  –  Lead Generation AI Agent System
-#              Pipeline Orchestrator & CLI
-# ─────────────────────────────────────────────
 """
 Usage:
     python main.py
@@ -26,7 +21,7 @@ import sys
 import textwrap
 from datetime import datetime
 
-# ── Bootstrap sys.path so sub-packages resolve ────────────────────────────────
+# Bootstrap sys.path so sub-packages resolve
 import os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -41,10 +36,7 @@ from utils.logger            import get_logger
 
 log = get_logger()
 
-
-# ══════════════════════════════════════════════
 #  User Input Agent
-# ══════════════════════════════════════════════
 
 def collect_user_input() -> tuple[str, str, int]:
     """Interactive CLI prompts; returns (business_type, location, max_leads)."""
@@ -84,21 +76,18 @@ def collect_user_input() -> tuple[str, str, int]:
     print("═" * 55 + "\n")
     return btype, location, max_leads
 
-
-# ══════════════════════════════════════════════
 #  Pipeline Orchestrator
-# ══════════════════════════════════════════════
 
 def run_pipeline(business_type: str, location: str, max_leads: int) -> None:
     start = datetime.now()
     log.info("Pipeline started at %s", start.strftime("%Y-%m-%d %H:%M:%S"))
     log.info("Query: '%s in %s'  |  Max leads: %d", business_type, location, max_leads)
 
-    # ── 1. Initialise database ──────────────────────────────────────────
+    # 1. Initialise database
     log.info("Initialising database …")
     init_db()
 
-    # ── 2. Google Maps Scraper Agent ────────────────────────────────────
+    # 2. Google Maps Scraper Agent
     maps_agent = MapsScraperAgent(business_type, location, max_leads)
     raw_leads  = maps_agent.run()
 
@@ -107,23 +96,23 @@ def run_pipeline(business_type: str, location: str, max_leads: int) -> None:
         print("\n⚠  No leads were collected. Check your query or network.")
         return
 
-    # ── 3. Business Detail Parser ───────────────────────────────────────
+    # 3. Business Detail Parser
     parser_agent = BusinessParserAgent()
     parsed_leads = parser_agent.run(raw_leads)
 
-    # ── 4. Website Enrichment Agent ─────────────────────────────────────
+    # 4. Website Enrichment Agent
     website_agent   = WebsiteEnrichmentAgent()
     enriched_leads  = website_agent.run(parsed_leads)
 
-    # ── 5. Email Extraction Agent ───────────────────────────────────────
+    # 5. Email Extraction Agent
     email_agent  = EmailExtractionAgent()
     email_leads  = email_agent.run(enriched_leads)
 
-    # ── 6. Data Cleaning Agent ──────────────────────────────────────────
+    # 6. Data Cleaning Agent
     cleaner_agent = DataCleaningAgent()
     clean_leads   = cleaner_agent.run(email_leads)
 
-    # ── 7. Storage & Export Agent ───────────────────────────────────────
+    # 7. Storage & Export Agent
     log.info("Saving leads to database …")
     inserted = bulk_insert_leads(clean_leads)
     total_in_db = count_leads()
@@ -134,7 +123,7 @@ def run_pipeline(business_type: str, location: str, max_leads: int) -> None:
     log.info("Exporting JSON …")
     json_path = export_json()
 
-    # ── Summary ─────────────────────────────────────────────────────────
+    # Summary
     elapsed = (datetime.now() - start).seconds
     emails_found = sum(1 for l in clean_leads if l.get("email"))
 
@@ -156,10 +145,7 @@ def run_pipeline(business_type: str, location: str, max_leads: int) -> None:
 
     log.info("Pipeline finished. %d leads stored.", total_in_db)
 
-
-# ══════════════════════════════════════════════
 #  Entry point
-# ══════════════════════════════════════════════
 
 if __name__ == "__main__":
     try:

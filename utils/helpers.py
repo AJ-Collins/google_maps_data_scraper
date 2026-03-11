@@ -1,7 +1,3 @@
-# ─────────────────────────────────────────────
-#  utils/helpers.py  –  Shared utility functions
-# ─────────────────────────────────────────────
-
 import random
 import re
 import time
@@ -16,8 +12,6 @@ from config import (
 )
 
 
-# ── Delays ─────────────────────────────────────
-
 def random_delay(min_s: float = ACTION_DELAY_MIN,
                  max_s: float = ACTION_DELAY_MAX) -> None:
     """Sleep for a random duration to mimic human behaviour."""
@@ -28,7 +22,6 @@ def scroll_delay() -> None:
     random_delay(SCROLL_DELAY_MIN, SCROLL_DELAY_MAX)
 
 
-# ── URL helpers ────────────────────────────────
 
 def safe_urljoin(base: str, path: str) -> str:
     """Safely join a base URL and a relative path."""
@@ -57,8 +50,6 @@ def get_base_url(url: str) -> str:
         return ""
 
 
-# ── Email helpers ──────────────────────────────
-
 def extract_emails_from_text(text: str) -> list[str]:
     """Return a de-duplicated list of emails found in *text*."""
     emails = re.findall(EMAIL_REGEX, text)
@@ -75,8 +66,6 @@ def extract_emails_from_text(text: str) -> list[str]:
     return list(dict.fromkeys(cleaned))   # deduplicate while preserving order
 
 
-# ── Phone helpers ──────────────────────────────
-
 def normalize_phone(phone: str) -> str:
     """Strip non-numeric characters, keep leading +."""
     if not phone:
@@ -84,9 +73,6 @@ def normalize_phone(phone: str) -> str:
     phone = phone.strip()
     normalized = re.sub(r"[^\d+]", "", phone)
     return normalized
-
-
-# ── Text helpers ───────────────────────────────
 
 def clean_text(text: str) -> str:
     """Strip excessive whitespace."""

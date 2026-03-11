@@ -1,7 +1,3 @@
-# ─────────────────────────────────────────────
-#  storage/database.py  –  SQLite persistence
-# ─────────────────────────────────────────────
-
 import sqlite3
 from datetime import datetime
 from typing import Optional
@@ -12,7 +8,7 @@ from utils.logger import get_logger
 log = get_logger()
 
 
-# ── Schema ─────────────────────────────────────
+# Schema
 
 CREATE_TABLE_SQL = """
 CREATE TABLE IF NOT EXISTS business_leads (
@@ -38,7 +34,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_name_phone
 """
 
 
-# ── Connection helper ──────────────────────────
+# Connection helper
 
 def get_connection() -> sqlite3.Connection:
     conn = sqlite3.connect(DB_PATH)
@@ -55,7 +51,7 @@ def init_db() -> None:
     log.debug("Database initialised at %s", DB_PATH)
 
 
-# ── Write ──────────────────────────────────────
+# Write
 
 def insert_lead(lead: dict) -> bool:
     """
@@ -92,7 +88,7 @@ def bulk_insert_leads(leads: list[dict]) -> int:
     return inserted
 
 
-# ── Read ───────────────────────────────────────
+# Read
 
 def fetch_all_leads() -> list[dict]:
     """Return all leads as a list of dicts."""

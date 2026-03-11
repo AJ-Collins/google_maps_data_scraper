@@ -1,7 +1,3 @@
-# ─────────────────────────────────────────────
-#  utils/logger.py  –  Logging setup
-# ─────────────────────────────────────────────
-
 import logging
 import sys
 from config import LOG_PATH

@@ -1,5 +1,5 @@
 # google_maps_data_scraper
-# 🔍 Lead Generation AI Agent System
+# 🔍 Python Based Google maps scraper for Cold Reach out
 
 A professional, multi-stage automation pipeline that collects B2B leads from
 Google Maps, enriches them with email addresses scraped from business websites,

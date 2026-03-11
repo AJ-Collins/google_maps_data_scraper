@@ -1,6 +1,3 @@
-# ─────────────────────────────────────────────
-#  agents/maps_agent.py  –  Google Maps Scraper Agent
-# ─────────────────────────────────────────────
 """
 Launches a Playwright browser, searches Google Maps for
 '{business_type} in {location}', scrolls the results sidebar,
@@ -27,9 +24,6 @@ from utils.helpers import random_delay, scroll_delay, clean_text
 from utils.logger import get_logger
 
 log = get_logger()
-
-
-# ── Selectors – matched against real Google Maps DOM (verified March 2026) ─
 
 SEL_SIDEBAR_FEED  = 'div[role="feed"]'
 
@@ -74,8 +68,6 @@ class MapsScraperAgent:
             MAPS_BASE_URL + urllib.parse.quote_plus(self.query)
         )
 
-    # ── Public entry point ──────────────────────────────────────────────
-
     def run(self) -> list[dict]:
         """Execute the full scraping pipeline and return collected leads."""
         log.info("Starting Google Maps search: '%s'", self.query)
@@ -113,8 +105,6 @@ class MapsScraperAgent:
 
         log.info("Google Maps scraping complete. Collected %d businesses.", len(results))
         return results
-
-    # ── Internal helpers ────────────────────────────────────────────────
 
     def _open_maps(self, page: Page) -> None:
         """Navigate to Google Maps and handle consent popups."""
@@ -222,14 +212,11 @@ class MapsScraperAgent:
             "opening_hours": "",
         }
 
-        # ── Business name ─────────────────────────────────────────────────────
         lead["business_name"] = self._get_text(page, SEL_BIZ_NAME)
 
-        # ── Category ──────────────────────────────────────────────────────────
         # <button class="DkEaL">Restaurant</button>
         lead["category"] = self._get_text(page, SEL_CATEGORY)
 
-        # ── Phone ─────────────────────────────────────────────────────────────
         # Real DOM: <button data-item-id="phone:tel:0709216000" ...>
         # Number lives after "tel:" in the data-item-id attribute
         try:
@@ -256,7 +243,6 @@ class MapsScraperAgent:
             except Exception:
                 pass
 
-        # ── Address ───────────────────────────────────────────────────────────
         # Real DOM: <button data-item-id="address" aria-label="Address: 154 James...">
         # Visible text in child div.Io6YTe
         try:
@@ -273,7 +259,6 @@ class MapsScraperAgent:
         except Exception:
             pass
 
-        # ── Website ───────────────────────────────────────────────────────────
         # Real DOM: <a data-item-id="authority" href="https://...">
         try:
             web_link = page.locator(SEL_WEBSITE_BTN).first
@@ -282,11 +267,9 @@ class MapsScraperAgent:
         except Exception:
             pass
 
-        # ── Rating ────────────────────────────────────────────────────────────
         # Real DOM: <span aria-hidden="true">4.5</span> inside div.F7nice
         lead["rating"] = self._get_text(page, SEL_RATING)
 
-        # ── Review count ──────────────────────────────────────────────────────
         # Real DOM: <span role="img" aria-label="428 reviews">(428)</span>
         try:
             import re as _re
@@ -299,7 +282,6 @@ class MapsScraperAgent:
         except Exception:
             pass
 
-        # ── Opening hours ─────────────────────────────────────────────────────
         # Real DOM: div.OqCZI > div.OMl5r (clickable toggle row)
         # After clicking, table.eK4R0e appears with the full schedule
         try:

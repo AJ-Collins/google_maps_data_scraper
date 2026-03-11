@@ -1,6 +1,3 @@
-# ─────────────────────────────────────────────
-#  agents/business_parser.py  –  Business Detail Extraction Agent
-# ─────────────────────────────────────────────
 """
 Receives raw lead dicts (from maps_agent) and applies initial
 parsing / normalisation before the enrichment stage.
@@ -31,7 +28,6 @@ class BusinessParserAgent:
         log.info("BusinessParserAgent: %d leads after parsing.", len(parsed))
         return parsed
 
-    # ── Internal ────────────────────────────────────────────────────────
 
     def _parse(self, lead: dict) -> Optional[dict]:
         lead = lead.copy()

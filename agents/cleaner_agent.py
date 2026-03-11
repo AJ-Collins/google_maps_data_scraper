@@ -1,6 +1,3 @@
-# ─────────────────────────────────────────────
-#  agents/cleaner_agent.py  –  Data Cleaning Agent
-# ─────────────────────────────────────────────
 """
 Deduplicates leads, removes invalid entries, and normalises
 remaining records before they are persisted to the database.
@@ -44,8 +41,6 @@ class DataCleaningAgent:
             before, after, before - after,
         )
         return leads
-
-    # ── Internal ────────────────────────────────────────────────────────
 
     def _clean_lead(self, lead: dict) -> Optional[dict]:
         lead = lead.copy()

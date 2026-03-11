@@ -1,6 +1,3 @@
-# ─────────────────────────────────────────────
-#  agents/email_agent.py  –  Email Extraction Agent
-# ─────────────────────────────────────────────
 """
 Scans the raw web text collected by the WebsiteEnrichmentAgent
 and populates the 'email' field on each lead dict.
@@ -42,8 +39,6 @@ class EmailExtractionAgent:
                 found_count += 1
         log.info("EmailExtractionAgent: extracted emails for %d leads.", found_count)
         return leads
-
-    # ── Internal ────────────────────────────────────────────────────────
 
     def _extract_best_emails(self, text: str, website: str) -> list[str]:
         all_emails = extract_emails_from_text(text)

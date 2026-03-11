@@ -1,7 +1,3 @@
-# ─────────────────────────────────────────────
-#  storage/exporter.py  –  CSV / JSON export
-# ─────────────────────────────────────────────
-
 import json
 
 import pandas as pd
