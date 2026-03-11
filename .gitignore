@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+.env
+
+# Logs
+*.log
+leadgen.log
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Data exports
+*.csv
+*.json
+
+# Storage folder
+storage/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
